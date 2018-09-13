@@ -1,6 +1,11 @@
+/*
+ * File: heap_error.c
+ * /
 #include <stdlib.h>
 #include <string.h>
+
 /*# valgrind --tool=memcheck --leak-check=full ./heap_error */
+
 int main(int argc, char* argv[])
 {
 	/*memory leak and buffer overflow.*/
