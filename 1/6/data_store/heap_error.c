@@ -1,6 +1,7 @@
 /*
  * File: heap_error.c
- * /
+ */
+ 
 #include <stdlib.h>
 #include <string.h>
 
