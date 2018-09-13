@@ -27,6 +27,7 @@ static DListRet str_print(void* ctx, void* data)
 	return DLIST_RET_OK;
 }
 
+/* 双向链表中存放常量字符串，转换时出现段错误*/
 static void demo_const(void)
 {
 	DList* dlist = dlist_create(NULL, NULL);
@@ -40,6 +41,7 @@ static void demo_const(void)
 	return ;
 }
 
+/* 双向链表中存放的是临时变量，转换后发现所有字符串都一样*/
 static void demo_temp(void)
 {
 	char str[256] = {0};
@@ -66,6 +68,7 @@ static void data_free(void* ctx, void* data)
 	return;
 }
 
+/*存放时，复制了数据，但没有释放所分配的内存*/
 static void demo_heap(void)
 {
 	DList* dlist = dlist_create(data_free, NULL);
