@@ -3,6 +3,7 @@
  */
 
 #include <stdlib.h>
+#include <stdint.h>
 #include "dlist.h"
 
 typedef struct _DListNode
@@ -289,20 +290,24 @@ void dlist_destroy(DList* thiz)
 
 static int cmp_int(void* ctx, void* data)
 {
-	return (int)data - (int)ctx;
+	//return (int)data - (int)ctx;
+	return (intptr_t)data - (intptr_t)ctx;
 }
 
 static DListRet print_int(void* ctx, void* data)
 {
-	printf("%d ", (int)data);
+	//printf("%d ", (int)data);
+	printf("%ld ", (intptr_t)data);
 
 	return DLIST_RET_OK;
 }
 
 static DListRet check_and_dec_int(void* ctx, void* data)
 {
-	int* expected =(int*)ctx;
-	assert(*expected == (int)data);
+	//int* expected =(int*)ctx;
+	//assert(*expected == (int)data);
+	intptr_t* expected =(intptr_t*)ctx;
+	assert(*expected == (intptr_t)data);
 
 	(*expected)--;
 
@@ -311,10 +316,16 @@ static DListRet check_and_dec_int(void* ctx, void* data)
 
 void test_int_dlist(void)
 {
-	int s = 0;
-	int i = 0;
-	int n = 100;
-	int data = 0;
+
+	//int s = 0;
+	//int i = 0;
+	//int n = 100;
+	//int data = 0;
+	intptr_t s = 0;
+	intptr_t i = 0;
+	intptr_t n = 100;
+	intptr_t data = 0;
+	
 	DList* dlist = dlist_create(NULL, NULL);
 
 	for(i = 0; i < n; i++)
