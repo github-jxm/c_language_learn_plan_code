@@ -1,3 +1,7 @@
+/*
+ * File : search.c
+ */
+
 #include "typedef.h"
 
 int qsearch(void** array, size_t nr, void* data, DataCompareFunc cmp)
