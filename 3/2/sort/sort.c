@@ -43,9 +43,8 @@ void quick_sort_impl(void** p_array, size_t left, size_t right, DataCompareFunc 
 	
 	intptr_t * array = (intptr_t *) p_array;    	
 
-	//void* x = (void*) (array[left]);
 	intptr_t x = array[left];
-
+	/*这个循环，让小于x的元素在左边，大于x的元素在右边*/
 	while(left < right){
 		while(cmp((void*)(array[right]), (void *) x) >= 0 && left < right) right--;
 		if(left != right){
