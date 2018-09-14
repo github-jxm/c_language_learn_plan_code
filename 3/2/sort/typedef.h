@@ -3,6 +3,7 @@
  */
 
 #include <stdio.h>
+#include <stdint.h>
 #include <assert.h>
 #include <stdlib.h>
 
@@ -19,7 +20,7 @@ typedef enum _Ret
 }Ret;
 
 typedef void     (*DataDestroyFunc)(void* ctx, void* data);
-typedef int      (*DataCompareFunc)(void* ctx, void* data);
+typedef intptr_t      (*DataCompareFunc)(void* ctx, void* data);
 typedef Ret      (*DataVisitFunc)(void* ctx, void* data);
 
 #ifdef __cplusplus
