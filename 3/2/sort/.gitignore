@@ -1,0 +1,6 @@
+*
+!.gitignore
+!Makefile
+!sort.c
+!sort.h
+!typedef.h
