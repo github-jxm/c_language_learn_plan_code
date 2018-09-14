@@ -1,0 +1,6 @@
+*
+!darray.c
+!darray.h
+!.gitignore
+!Makefile
+!typedef.h
