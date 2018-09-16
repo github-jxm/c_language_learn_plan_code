@@ -17,14 +17,10 @@ static Ret  locker_nest_lock(Locker* thiz)
 	Ret ret = RET_OK;
 	PrivInfo* priv = (PrivInfo*)thiz->priv;
 
-	if(priv->owner == priv->task_self())
-	{
+	if(priv->owner == priv->task_self()) {
 		priv->refcount++;
-	}
-	else
-	{
-		if( (ret = locker_lock(priv->real_locker)) == RET_OK)
-		{
+	} else {
+		if( (ret = locker_lock(priv->real_locker)) == RET_OK) {
 			priv->refcount = 1;
 			priv->owner = priv->task_self();
 		}
@@ -41,8 +37,7 @@ static Ret  locker_nest_unlock(Locker* thiz)
 	return_val_if_fail(priv->owner == priv->task_self(), RET_FAIL);
 	
 	priv->refcount--;
-	if(priv->refcount == 0)
-	{
+	if(priv->refcount == 0) {
 		priv->owner = 0;
 		ret = locker_unlock(priv->real_locker);
 	}
@@ -71,8 +66,7 @@ Locker* locker_nest_create(Locker* real_locker, TaskSelfFunc task_self)
 	
 	thiz = (Locker*)malloc(sizeof(Locker) + sizeof(PrivInfo));
 
-	if(thiz != NULL)
-	{
+	if(thiz != NULL) {
 		PrivInfo* priv = (PrivInfo*)thiz->priv;
 
 		thiz->lock    = locker_nest_lock;

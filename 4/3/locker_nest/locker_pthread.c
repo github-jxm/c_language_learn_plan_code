@@ -44,8 +44,7 @@ Locker* locker_pthread_create(void)
 {
 	Locker* thiz = (Locker*)malloc(sizeof(Locker) + sizeof(PrivInfo));
 
-	if(thiz != NULL)
-	{
+	if(thiz != NULL) {
 		PrivInfo* priv = (PrivInfo*)thiz->priv;
 
 		thiz->lock    = locker_pthread_lock;
