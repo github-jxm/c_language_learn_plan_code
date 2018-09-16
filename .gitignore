@@ -2,3 +2,5 @@
 *.o
 *.out
 *.svn
+.vagrant/
+*.log
