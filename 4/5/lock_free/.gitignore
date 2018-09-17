@@ -1,0 +1,11 @@
+*
+!.gitignore
+!Makefile
+!atomic.c
+!dlist.c
+!dlist.h
+!fifo_ring.c
+!iatomic.h
+!locker.h
+!swmr_dlist.c
+!typedef.h

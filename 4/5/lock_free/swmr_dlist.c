@@ -1,34 +1,8 @@
 /*
  * File:    swmr_dlist.c
- * Author:  Li XianJing <xianjimli@hotmail.com>
- * Brief:   single writer multi reader lock-free dlist.
- *
- * Copyright (c) Li XianJing
- *
- * Licensed under the Academic Free License version 2.1
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/*
- * History:
- * ================================================================
- * 2008-12-27 Li XianJing <xianjimli@hotmail.com> created.
- *
- */
-
+#include <unistd.h>
 #include "dlist.h"
 #include "iatomic.h"
 
@@ -56,21 +30,18 @@ SwmrDList* swmr_dlist_create(DListDataDestroyFunc data_destroy, void* ctx)
 
 	do
 	{
-		if((thiz->dlists[0] = dlist_create(data_destroy, ctx, NULL)) == NULL)
-		{
+		if((thiz->dlists[0] = dlist_create(data_destroy, ctx, NULL)) == NULL) {
 			break;
 		}
 	
-		if((thiz->dlists[1] = dlist_create(data_destroy, ctx, NULL)) == NULL)
-		{
+		if((thiz->dlists[1] = dlist_create(data_destroy, ctx, NULL)) == NULL) {
 			break;
 		}
 
 		ret = RET_OK;
 	}while(0);
 
-	if(ret != RET_OK)
-	{
+	if(ret != RET_OK) {
 		swmr_dlist_destroy(thiz);
 		thiz = NULL;
 	}
@@ -80,10 +51,8 @@ SwmrDList* swmr_dlist_create(DListDataDestroyFunc data_destroy, void* ctx)
 
 void swmr_dlist_destroy(SwmrDList* thiz)
 {
-	if(thiz != NULL)
-	{
-		if(thiz->dlists !=	NULL)
-		{
+	if(thiz != NULL) {
+		if(thiz->dlists != NULL) {
 			dlist_destroy(thiz->dlists[0]);
 			dlist_destroy(thiz->dlists[1]);
 			thiz->dlists[0] = NULL;
@@ -95,7 +64,7 @@ void swmr_dlist_destroy(SwmrDList* thiz)
 	return;
 }
 
-int      swmr_dlist_find(SwmrDList* thiz, DListDataCompareFunc cmp, void* ctx)
+int swmr_dlist_find(SwmrDList* thiz, DListDataCompareFunc cmp, void* ctx)
 {
 	int ret = 0;
 	return_val_if_fail(thiz != NULL && thiz->dlists != NULL, -1);
@@ -108,7 +77,7 @@ int      swmr_dlist_find(SwmrDList* thiz, DListDataCompareFunc cmp, void* ctx)
 	return ret;
 }
 
-int      swmr_dlist_length(SwmrDList* thiz)
+int swmr_dlist_length(SwmrDList* thiz)
 {
 	int ret = 0;
 	return_val_if_fail(thiz != NULL && thiz->dlists != NULL, -1);
@@ -128,8 +97,7 @@ Ret swmr_dlist_insert(SwmrDList* thiz, size_t index, void* data)
 	return_val_if_fail(thiz != NULL && thiz->dlists != NULL, ret);
 
 	size_t wr_index = !((thiz->rd_index_and_ref.counter>>24) & 0x1);
-	if((ret = dlist_insert(thiz->dlists[wr_index], index, data)) == RET_OK)
-	{
+	if((ret = dlist_insert(thiz->dlists[wr_index], index, data)) == RET_OK) {
 		int rd_index_old = thiz->rd_index_and_ref.counter & 0xFF000000;
 		int rd_index_new = wr_index << 24;
 
@@ -152,8 +120,7 @@ Ret swmr_dlist_delete(SwmrDList* thiz, size_t index)
 	return_val_if_fail(thiz != NULL && thiz->dlists != NULL, ret);
 
 	size_t wr_index = !((thiz->rd_index_and_ref.counter>>24) & 0x1);
-	if((ret = dlist_delete(thiz->dlists[wr_index], index)) == RET_OK)
-	{
+	if((ret = dlist_delete(thiz->dlists[wr_index], index)) == RET_OK) {
 		int rd_index_old = thiz->rd_index_and_ref.counter & 0xFF000000;
 		int rd_index_new = wr_index << 24;
 
@@ -183,10 +150,8 @@ static void* reader(void* param)
 	size_t length = 0;
 	SwmrDList* swmr = (SwmrDList*)param;
 
-	for(j = 0; j < NR; j++)
-	{
-		for(i = 0; i < swmr_dlist_length(swmr); i++)
-		{
+	for(j = 0; j < NR; j++) {
+		for(i = 0; i < swmr_dlist_length(swmr); i++) {
 			assert(swmr_dlist_find(swmr, cmp_int, (void*)i) == i);
 		}
 	}
@@ -199,13 +164,11 @@ static void* writer(void* param)
 	int i = 0;
 	SwmrDList* swmr = (SwmrDList*)param;
 
-	for(i = 0; i < NR; i++)
-	{
+	for(i = 0; i < NR; i++) {
 		swmr_dlist_insert(swmr, i, (void*)i);
 	}
 	
-	for(; i>0; i--)
-	{
+	for(; i>0; i--) {
 		swmr_dlist_delete(swmr, i);
 	}
 
@@ -222,13 +185,11 @@ int main(int argc, char* argv[])
 	SwmrDList* swmr = swmr_dlist_create(NULL, NULL);
 
 	pthread_create(&wr_tid, NULL, writer, swmr);
-	for(i = 0; i < RD_NR; i++)
-	{
+	for(i = 0; i < RD_NR; i++) {
 		pthread_create(rd_tids+i, NULL, reader, swmr);
 	}
 	
-	for(i = 0; i < RD_NR; i++)
-	{
+	for(i = 0; i < RD_NR; i++) {
 		pthread_join(rd_tids[i], NULL);
 	}
 
