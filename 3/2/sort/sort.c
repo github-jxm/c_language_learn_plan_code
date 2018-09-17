@@ -4,6 +4,9 @@
 
 #include "sort.h"
 
+/*
+ *  冒泡排序
+ */
 Ret bubble_sort(void** p_array, size_t nr, DataCompareFunc cmp)
 {
 	size_t i     = 0;
@@ -36,6 +39,10 @@ Ret bubble_sort(void** p_array, size_t nr, DataCompareFunc cmp)
 	return RET_OK;
 }
 
+
+/*
+ *  快速排序
+ */
 void quick_sort_impl(void** p_array, size_t left, size_t right, DataCompareFunc cmp)
 {
 	size_t save_left  = left;
@@ -84,6 +91,9 @@ Ret quick_sort(void** array, size_t nr, DataCompareFunc cmp)
 	return ret;
 }
 
+/*
+ * 归并排序
+ */
 static Ret merge_sort_impl(void** p_storage, void** p_array, size_t low, size_t mid, size_t high, DataCompareFunc cmp)
 {
 	size_t i = low;
