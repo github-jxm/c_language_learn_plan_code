@@ -1,3 +1,7 @@
+/*
+ * File : linear_container.h
+ */
+
 #ifndef LINEAR_CONTAINER_H
 #define LINEAR_CONTAINER_H
 
