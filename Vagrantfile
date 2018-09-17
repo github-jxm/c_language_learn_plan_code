@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
      ## vim  
      apt-get install -y vim
      su - vagrant -c "git clone --recursive  https://github.com/Jiangxumin/dotvim.git /home/vagrant/.vim"
-     su - vagrant -c "ln -s ${HOME}/.vim/vimrc /home/vagrant/.vimrc"
+     su - vagrant -c "ln -s /home/vagrant/.vim/vimrc /home/vagrant/.vimrc"
      ## install YCM  
      apt-get install -y build-essential cmake
 
