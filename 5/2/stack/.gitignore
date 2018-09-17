@@ -1,0 +1,9 @@
+*
+!.gitignore
+!Makefile
+!dlist.c
+!dlist.h
+!stack.c
+!stack.h
+!test_helper.c
+!typedef.h
