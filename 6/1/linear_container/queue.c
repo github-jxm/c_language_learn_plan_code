@@ -18,8 +18,7 @@ Queue* queue_create(LinearContainer* container)
 
 	thiz = (Queue*)malloc(sizeof(Queue));
 
-	if(thiz != NULL)
-	{
+	if(thiz != NULL) {
 		thiz->linear_container = container;
 	}
 
@@ -63,8 +62,7 @@ Ret      queue_foreach(Queue* thiz, DataVisitFunc visit, void* ctx)
 
 void queue_destroy(Queue* thiz)
 {
-	if(thiz != NULL)
-	{
+	if(thiz != NULL) {
 		linear_container_destroy(thiz->linear_container);
 		thiz->linear_container = NULL;
 
@@ -84,8 +82,7 @@ int main(int argc, char* argv[])
 	int ret_data = 0;
 	Queue* queue = queue_create(linear_container_dlist_create(NULL, NULL));		
 
-	for(i = 0; i < n; i++)
-	{
+	for(i = 0; i < n; i++) {
 		assert(queue_push(queue, (void*)i) == RET_OK);
 		assert(queue_head(queue, (void**)&ret_data) == RET_OK);
 		assert(queue_length(queue) == (i+1));
@@ -93,8 +90,7 @@ int main(int argc, char* argv[])
 
 	queue_foreach(queue, print_int, NULL);
 
-	for(i = 0; i < n; i++)
-	{
+	for(i = 0; i < n; i++) {
 		assert(queue_head(queue, (void**)&ret_data) == RET_OK);
 		assert(ret_data == i );
 		assert(queue_length(queue) == (n - i));
@@ -105,5 +101,3 @@ int main(int argc, char* argv[])
 	return 0;
 }
 #endif/*QUEUE_TEST*/
-
-

@@ -1,3 +1,7 @@
+/*
+ * File : test_helper.c
+ */
+
 static int hash_int(void* data)
 {
 	return (int)data;

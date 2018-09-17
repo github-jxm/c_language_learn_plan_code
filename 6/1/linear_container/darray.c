@@ -17,8 +17,7 @@ struct _DArray
 
 static void darray_destroy_data(DArray* thiz, void* data)
 {
-	if(thiz->data_destroy != NULL)
-	{
+	if(thiz->data_destroy != NULL) {
 		thiz->data_destroy(thiz->data_destroy_ctx, data);
 	}
 
@@ -29,8 +28,7 @@ DArray* darray_create(DataDestroyFunc data_destroy, void* ctx)
 {
 	DArray* thiz = malloc(sizeof(DArray));
 
-	if(thiz != NULL)
-	{
+	if(thiz != NULL) {
 		thiz->data  = NULL;
 		thiz->size  = 0;
 		thiz->alloc_size = 0;
@@ -46,13 +44,11 @@ static Ret darray_expand(DArray* thiz, size_t need)
 {
 	return_val_if_fail(thiz != NULL, RET_INVALID_PARAMS); 
 
-	if((thiz->size + need) > thiz->alloc_size)
-	{
+	if((thiz->size + need) > thiz->alloc_size) {
 		size_t alloc_size = thiz->alloc_size + (thiz->alloc_size>>1) + MIN_PRE_ALLOCATE_NR;
 
 		void** data = (void**)realloc(thiz->data, sizeof(void*) * alloc_size);
-		if(data != NULL)
-		{
+		if(data != NULL) {
 			thiz->data = data;
 			thiz->alloc_size = alloc_size;
 		}
@@ -65,13 +61,11 @@ static Ret darray_shrink(DArray* thiz)
 {
 	return_val_if_fail(thiz != NULL, RET_INVALID_PARAMS); 
 
-	if((thiz->size < (thiz->alloc_size >> 1)) && (thiz->alloc_size > MIN_PRE_ALLOCATE_NR))
-	{
+	if((thiz->size < (thiz->alloc_size >> 1)) && (thiz->alloc_size > MIN_PRE_ALLOCATE_NR)) {
 		size_t alloc_size = thiz->size + (thiz->size >> 1);
 
 		void** data = (void**)realloc(thiz->data, sizeof(void*) * alloc_size);
-		if(data != NULL)
-		{
+		if(data != NULL) {
 			thiz->data = data;
 			thiz->alloc_size = alloc_size;
 		}
@@ -88,11 +82,9 @@ Ret darray_insert(DArray* thiz, size_t index, void* data)
 
 	cursor = cursor < thiz->size ? cursor : thiz->size;
 
-	if(darray_expand(thiz, 1) == RET_OK)
-	{
+	if(darray_expand(thiz, 1) == RET_OK) {
 		size_t i = 0;
-		for(i = thiz->size; i > cursor; i--)
-		{
+		for(i = thiz->size; i > cursor; i--) {
 			thiz->data[i] = thiz->data[i-1];
 		}
 
@@ -122,8 +114,7 @@ Ret darray_delete(DArray* thiz, size_t index)
 	return_val_if_fail(thiz != NULL && thiz->size > index, RET_INVALID_PARAMS); 
 
 	darray_destroy_data(thiz, thiz->data[index]);
-	for(i = index; (i+1) < thiz->size; i++)
-	{
+	for(i = index; (i+1) < thiz->size; i++) {
 		thiz->data[i] = thiz->data[i+1];
 	}
 	thiz->size--;
@@ -167,8 +158,7 @@ Ret darray_foreach(DArray* thiz, DataVisitFunc visit, void* ctx)
 	Ret ret = RET_OK;
 	return_val_if_fail(thiz != NULL && visit != NULL, RET_INVALID_PARAMS);
 
-	for(i = 0; i < thiz->size; i++)
-	{
+	for(i = 0; i < thiz->size; i++) {
 		ret = visit(ctx, thiz->data[i]);
 	}
 
@@ -181,10 +171,8 @@ int      darray_find(DArray* thiz, DataCompareFunc cmp, void* ctx)
 
 	return_val_if_fail(thiz != NULL && cmp != NULL, -1);
 
-	for(i = 0; i < thiz->size; i++)
-	{
-		if(cmp(ctx, thiz->data[i]) == 0)
-		{
+	for(i = 0; i < thiz->size; i++) {
+		if(cmp(ctx, thiz->data[i]) == 0) {
 			break;
 		}
 	}
@@ -196,10 +184,8 @@ void darray_destroy(DArray* thiz)
 {
 	size_t i = 0;
 	
-	if(thiz != NULL)
-	{
-		for(i = 0; i < thiz->size; i++)
-		{
+	if(thiz != NULL) {
+		for(i = 0; i < thiz->size; i++) {
 			darray_destroy_data(thiz, thiz->data[i]);
 		}
 		
@@ -229,8 +215,7 @@ static void test_int_darray(void)
 	int data = 0;
 	DArray* darray = darray_create(NULL, NULL);
 
-	for(i = 0; i < n; i++)
-	{
+	for(i = 0; i < n; i++) {
 		assert(darray_append(darray, (void*)i) == RET_OK);
 		assert(darray_length(darray) == (i + 1));
 		assert(darray_get_by_index(darray, i, (void**)&data) == RET_OK);
@@ -242,15 +227,13 @@ static void test_int_darray(void)
 		assert(darray_find(darray, cmp_int, (void*)i) == i);
 	}
 
-	for(i = 0; i < n; i++)
-	{
+	for(i = 0; i < n; i++) {
 		assert(darray_get_by_index(darray, 0, (void**)&data) == RET_OK);
 		assert(data == (i));
 		assert(darray_length(darray) == (n-i));
 		assert(darray_delete(darray, 0) == RET_OK);
 		assert(darray_length(darray) == (n-i-1));
-		if((i + 1) < n)
-		{
+		if((i + 1) < n) {
 			assert(darray_get_by_index(darray, 0, (void**)&data) == RET_OK);
 			assert((int)data == (i+1));
 		}
@@ -258,8 +241,7 @@ static void test_int_darray(void)
 	
 	assert(darray_length(darray) == 0);
 
-	for(i = 0; i < n; i++)
-	{
+	for(i = 0; i < n; i++) {
 		assert(darray_prepend(darray, (void*)i) == RET_OK);
 		assert(darray_length(darray) == (i + 1));
 		assert(darray_get_by_index(darray, 0, (void**)&data) == RET_OK);
@@ -310,4 +292,3 @@ int main(int argc, char* argv[])
 	return 0;
 }
 #endif
-
