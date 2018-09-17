@@ -66,20 +66,24 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-     #sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/' /etc/apt/sources.list
-     #apt-get update
+     sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/' /etc/apt/sources.list
+     apt-get update
 
+     ## vim  
      apt-get install -y vim
+     su - vagrant -c "git clone --recursive  https://github.com/Jiangxumin/dotvim.git /home/vagrant/.vim"
+     su - vagrant -c "ln -s ${HOME}/.vim/vimrc /home/vagrant/.vimrc"
+     ## install YCM  
+     apt-get install -y build-essential cmake
 
+     ## git
      apt-get install -y git
      git config --global user.email "cjiangxumin@gmail.com"
      git config --global user.name "jiangxumin"
      git config --global core.editor vim
 
+     ##
      apt-get install -y g++-multilib libc6-dev-i386
-
-     # install YCM  
-     apt-get install -y build-essential cmake
-
+    
    SHELL
 end
