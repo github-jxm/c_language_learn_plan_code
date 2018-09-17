@@ -78,9 +78,9 @@ Vagrant.configure("2") do |config|
 
      ## git
      apt-get install -y git
-     git config --global user.email "cjiangxumin@gmail.com"
-     git config --global user.name "jiangxumin"
-     git config --global core.editor vim
+     su - vagrant -c "git config --global user.email 'cjiangxumin@gmail.com'"
+     su - vagrant -c "git config --global user.name 'jiangxumin'"
+     su - vagrant -c "git config --global core.editor vim"
 
      ##
      apt-get install -y g++-multilib libc6-dev-i386
