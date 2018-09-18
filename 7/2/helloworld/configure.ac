@@ -7,6 +7,15 @@ AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 
+
+#  ./configure  --enable-debug 时，  CFLAGS="${CFLAGS} -g -O0"
+#  ./configure                 时，  CFLAGS="-m32 -g -O2"
+AC_ARG_ENABLE([debug],
+	      [AS_HELP_STRING([--enable-debug],[debug program(default is no)])],
+	      [CFLAGS="${CFLAGS} -g -O0"],
+	      [CFLAGS="-m32 -g -O2"]
+	    )
+
 # Checks for programs.
 AC_PROG_CC
 
