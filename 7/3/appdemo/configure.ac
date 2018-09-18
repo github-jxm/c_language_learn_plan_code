@@ -20,8 +20,12 @@ AM_PROG_AR
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
+AC_PROG_LIBTOOL
 
 # Checks for libraries.
+PKG_CHECK_MODULES(BASE, ["base"])
+AC_SUBST(BASE_CFLAGS)
+AC_SUBST(BASE_LIBS)
 
 # Checks for header files.
 
