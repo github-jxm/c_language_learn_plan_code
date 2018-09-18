@@ -20,7 +20,7 @@ AM_PROG_AR
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
-AC_PROG_LIBTOOL
+AC_PROG_LIBTOOL   # 添加, 解决:appdemo/src/main.c:5: undefined reference to `dlist_create'
 
 # Checks for libraries.
 PKG_CHECK_MODULES(BASE, ["base"])
