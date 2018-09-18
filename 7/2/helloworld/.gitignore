@@ -7,4 +7,5 @@
 !NEWS
 !src
 !configure.ac
+!configure.scan
 !autogen.sh
