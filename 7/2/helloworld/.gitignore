@@ -6,6 +6,5 @@
 !Makefile.am
 !NEWS
 !src
-!autobuild.sh
 !configure.ac
 !autogen.sh
