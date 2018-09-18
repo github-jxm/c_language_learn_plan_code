@@ -20,12 +20,12 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 AM_PROG_AR
 
-
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lpthread':
 AC_CHECK_LIB([pthread], [main])
 
 # Checks for header files.
+AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -38,4 +38,4 @@ AC_FUNC_REALLOC
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile])
-AC_OUTPUT
+AC_OUTPUT(base.pc)
