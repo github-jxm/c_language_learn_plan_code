@@ -16,24 +16,24 @@ AC_ARG_ENABLE([debug],
 	    )
 
 # Checks for programs.
-AC_PROG_CC
-AC_PROG_LIBTOOL
 AM_PROG_AR
+AC_PROG_CC
+AC_PROG_LIBTOOL  # 检查 libtool
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lpthread':
 AC_CHECK_LIB([pthread], [main])
 
 # Checks for header files.
-AC_HEADER_STDC
-AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
+#AC_HEADER_STDC
+AC_CHECK_HEADERS([stdlib.h string.h unistd.h])  #检查头文件是否存在
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
 AC_TYPE_SIZE_T
 
 # Checks for library functions.
-AC_FUNC_MALLOC
+AC_FUNC_MALLOC  #检查标准malloc函数是否存在
 AC_FUNC_REALLOC
 
 AC_CONFIG_FILES([Makefile
