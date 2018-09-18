@@ -2,6 +2,7 @@
 !.gitignore
 !AUTHORS
 !ChangeLog
+!README
 !Makefile.am
 !NEWS
 !src
