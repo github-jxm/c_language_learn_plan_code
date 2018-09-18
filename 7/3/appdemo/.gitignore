@@ -1,0 +1,12 @@
+*
+!.gitignore
+!AUTHORS
+!ChangeLog
+!Makefile.am
+!NEWS
+!README
+!autogen.sh
+!configure.ac
+!src
+!*.c
+!*.am
