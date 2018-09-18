@@ -1,0 +1,10 @@
+*
+!.gitignore
+!AUTHORS
+!ChangeLog
+!Makefile.am
+!NEWS
+!README
+!base.pc.in
+!src
+!configure.ac
