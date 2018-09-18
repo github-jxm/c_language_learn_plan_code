@@ -84,6 +84,11 @@ Vagrant.configure("2") do |config|
 
      ##
      apt-get install -y g++-multilib libc6-dev-i386
+
+     # 
+     apt-get install -y autoconf
+     apt-get install -y libtool
+     apt-get install -y  pkg-config
     
    SHELL
 end
