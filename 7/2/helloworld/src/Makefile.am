@@ -1,2 +1,2 @@
-bin_PROGRAMS=helloworld
-helloworld_SOURCES=main.c
+bin_PROGRAMS=hello
+hello_SOURCES=main.c
