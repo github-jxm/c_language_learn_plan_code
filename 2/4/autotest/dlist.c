@@ -297,7 +297,9 @@ static int cmp_int(void* ctx, void* data)
 static DListRet print_int(void* ctx, void* data)
 {
 	//printf("%d ", (int)data);
-	printf("%ld ", (intptr_t)data);
+	//printf("%d ", (intptr_t)data);
+	printf("%p ", data);
+	//printf("%ld ", (intptr_t)data);
 
 	return DLIST_RET_OK;
 }
