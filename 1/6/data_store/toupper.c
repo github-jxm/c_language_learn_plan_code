@@ -9,12 +9,9 @@
 char* str_toupper_bad(char* str)
 {
 	char* p = str;
-	if(p != NULL)
-	{
-		while(*p != '\0')
-		{
-			if('a' <= *p && *p <= 'z')
-			{
+	if(p != NULL) {
+		while(*p != '\0'){
+			if('a' <= *p && *p <= 'z'){
 				*p = *p - ('a' - 'A'); 
 			}
 			p++;
@@ -27,12 +24,9 @@ char* str_toupper_bad(char* str)
 char* str_toupper_good(char* str)
 {
 	char* p = str;
-	if(p != NULL)
-	{
-		while(*p != '\0')
-		{
-			if(islower(*p))
-			{
+	if(p != NULL){
+		while(*p != '\0'){
+			if(islower(*p)){
 				*p = toupper(*p);
 			}
 			p++;
