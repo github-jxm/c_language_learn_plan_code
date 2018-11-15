@@ -1,0 +1,5 @@
+*
+!.gitignore
+!Makefile
+!fifo_ring.c
+!typedef.h
