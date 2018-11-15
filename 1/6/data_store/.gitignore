@@ -1,0 +1,10 @@
+*
+!.gitignore
+!Makefile
+!bss.c
+!data.c
+!dlist.c
+!dlist.h
+!dlist_toupper.c
+!heap_error.c
+!toupper.c
