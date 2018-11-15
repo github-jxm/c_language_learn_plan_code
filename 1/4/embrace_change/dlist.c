@@ -79,7 +79,6 @@ DListRet dlist_insert(DList* thiz, size_t index, void* data)
 
 	if(thiz->first == NULL) {
 		thiz->first = node;
-
 		return DLIST_RET_OK;
 	}
 
