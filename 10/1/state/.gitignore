@@ -1,0 +1,9 @@
+*
+!.gitignore
+!Makefile
+!count_word.c
+!ini_parser.c
+!parse_token.c
+!word_segmentation.c
+!xml_parser.c
+!xml_parser.h

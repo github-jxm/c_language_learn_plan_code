@@ -15,35 +15,25 @@ int count_word(const char* text)
 	int count = 0;
 	const char* p = text;
 
-	for(p = text; *p != '\0'; p++)
-	{
-		switch(state)
-		{
-			case STAT_INIT:
-			{
-				if(IS_WORD_CHAR(*p))
-				{
+	for(p = text; *p != '\0'; p++){
+		switch(state){
+			case STAT_INIT:{
+				if(IS_WORD_CHAR(*p)){
 					state = STAT_IN_WORD;
-				}
-				else
-				{
+				}else{
 					state = STAT_OUT_WORD;
 				}
 				break;
 			}
-			case STAT_IN_WORD:
-			{
-				if(!IS_WORD_CHAR(*p))
-				{
+			case STAT_IN_WORD:{
+				if(!IS_WORD_CHAR(*p)){
 					count++;
 					state = STAT_OUT_WORD;
 				}
 				break;
 			}
-			case STAT_OUT_WORD:
-			{
-				if(IS_WORD_CHAR(*p))
-				{
+			case STAT_OUT_WORD:{
+				if(IS_WORD_CHAR(*p)){
 					state = STAT_IN_WORD;
 				}
 				break;
@@ -52,8 +42,7 @@ int count_word(const char* text)
 		}
 	}
 
-	if(state == STAT_IN_WORD)
-	{
+	if(state == STAT_IN_WORD){
 		count++;
 	}
 

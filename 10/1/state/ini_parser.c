@@ -9,8 +9,7 @@ const char* strtrim(char* str)
 
 	p = str + strlen(str) - 1;
 
-	while(p != str && isspace(*p)) 
-	{
+	while(p != str && isspace(*p)){
 		*p = '\0';
 		p--;
 	}
@@ -18,12 +17,10 @@ const char* strtrim(char* str)
 	p = str;
 	while(*p != '\0' && isspace(*p)) p++;
 
-	if(p != str)
-	{
+	if(p != str){
 		char* s = p;
 		char* d = str;
-		while(*s != '\0')
-		{
+		while(*s != '\0'){
 			*d = *s;
 			d++;
 			s++;
@@ -41,41 +38,30 @@ static void ini_parse_internal(char* buffer, char comment_char, char delim_char)
 	char* key_start   = NULL;
 	char* value_start = NULL;
 	
-	enum _State
-	{
-		STAT_NONE = 0,
+	enum _State{
+		STAT_NONE = 0, /*空白状态*/
 		STAT_GROUP,
 		STAT_KEY,
-		STAT_VALUE,
-		STAT_COMMENT
+		STAT_VALUE, 
+		STAT_COMMENT /*注释状态*/
 	}state = STAT_NONE;
 
-	for(p = buffer; *p != '\0'; p++)
-	{
-		switch(state)
-		{
-			case STAT_NONE:
-			{
-				if(*p == '[')
-				{
+	for(p = buffer; *p != '\0'; p++){
+		switch(state){
+			case STAT_NONE:{
+				if(*p == '['){
 					state = STAT_GROUP;
 					group_start = p + 1;
-				}
-				else if(*p == comment_char)
-				{
+				}else if(*p == comment_char){
 					state = STAT_COMMENT;
-				}
-				else if(!isspace(*p))
-				{
+				}else if(!isspace(*p)){
 					state = STAT_KEY;
 					key_start = p;
 				}
 				break;
 			}
-			case STAT_GROUP:
-			{
-				if(*p == ']')
-				{
+			case STAT_GROUP:{
+				if(*p == ']'){
 					*p = '\0';
 					state = STAT_NONE;
 					strtrim(group_start);
@@ -83,29 +69,23 @@ static void ini_parse_internal(char* buffer, char comment_char, char delim_char)
 				}
 				break;
 			}
-			case STAT_COMMENT:
-			{
-				if(*p == '\n')
-				{
+			case STAT_COMMENT:{
+				if(*p == '\n'){
 					state = STAT_NONE;
 					break;
 				}
 				break;
 			}
-			case STAT_KEY:
-			{
-				if(*p == delim_char || (delim_char == ' ' && *p == '\t'))
-				{
+			case STAT_KEY:{
+				if(*p == delim_char || (delim_char == ' ' && *p == '\t')){
 					*p = '\0';
 					state = STAT_VALUE;
 					value_start = p + 1;
 				}
 				break;
 			}
-			case STAT_VALUE:
-			{
-				if(*p == '\n' || *p == '\r')
-				{
+			case STAT_VALUE:{
+				if(*p == '\n' || *p == '\r'){
 					*p = '\0';
 					state = STAT_NONE;
 					strtrim(key_start);
