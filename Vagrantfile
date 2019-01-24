@@ -55,8 +55,8 @@ Vagrant.configure("2") do |config|
   
     # Customize the amount of memory on the VM:
     vb.name = "c_language_learn_plan"
-    vb.cpus = "4"
-    vb.memory = "2048"
+    vb.cpus = "2"
+    vb.memory = "512"
   end
   #
   # View the documentation for the provider you are using for more
