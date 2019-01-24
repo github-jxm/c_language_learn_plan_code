@@ -5,16 +5,14 @@
 #include "dlist.h"
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
 
 static DListRet str_toupper(void* ctx, void* data)
 {
 	char* p = (char*)data;
-	if(p != NULL)
-	{
-		while(*p != '\0')
-		{
-			if(islower(*p))
-			{
+	if(p != NULL){
+		while(*p != '\0'){
+			if(islower((*p))){
 				*p = toupper(*p);
 			}
 			p++;
@@ -26,7 +24,7 @@ static DListRet str_toupper(void* ctx, void* data)
 
 static DListRet str_print(void* ctx, void* data)
 {
-	printf("%s\n", data);
+	printf("%s\n", (char *)data);
 	
 	return DLIST_RET_OK;
 }

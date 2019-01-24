@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
 	}
 
 	dlist_print(dlist, print_int);
+	printf("\n");
 
 	dlist_destroy(dlist);
 

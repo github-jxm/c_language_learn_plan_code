@@ -1,0 +1,14 @@
+*
+!.gitignore
+!Makefile
+!typedef.h
+!xml_builder.h
+!xml_builder_dump.c
+!xml_builder_dump.h
+!xml_builder_tree.c
+!xml_builder_tree.h
+!xml_parser.c
+!xml_parser.h
+!xml_parser_test.c
+!xml_tree.c
+!xml_tree.h

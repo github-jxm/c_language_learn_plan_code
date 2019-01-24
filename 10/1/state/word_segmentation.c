@@ -9,8 +9,7 @@ typedef void (*OnWordFunc)(void* ctx, const char* word);
 
 int word_segmentation(const char* text, OnWordFunc on_word, void* ctx)
 {
-	enum _State
-	{
+	enum _State{
 		STAT_INIT,
 		STAT_IN_WORD,
 		STAT_OUT_WORD,
@@ -21,23 +20,17 @@ int word_segmentation(const char* text, OnWordFunc on_word, void* ctx)
 	char* p = copy_text;
 	char* word = copy_text;
 
-	for(p = copy_text; *p != '\0'; p++)
-	{
-		switch(state)
-		{
-			case STAT_INIT:
-			{
-				if(IS_WORD_CHAR(*p))
-				{
+	for(p = copy_text; *p != '\0'; p++){
+		switch(state){
+			case STAT_INIT:{
+				if(IS_WORD_CHAR(*p)){
 					word = p;
 					state = STAT_IN_WORD;
 				}
 				break;
 			}
-			case STAT_IN_WORD:
-			{
-				if(!IS_WORD_CHAR(*p))
-				{
+			case STAT_IN_WORD:{
+				if(!IS_WORD_CHAR(*p)){
 					count++;
 					*p = '\0';
 					on_word(ctx, word);
@@ -45,10 +38,8 @@ int word_segmentation(const char* text, OnWordFunc on_word, void* ctx)
 				}
 				break;
 			}
-			case STAT_OUT_WORD:
-			{
-				if(IS_WORD_CHAR(*p))
-				{
+			case STAT_OUT_WORD:{
+				if(IS_WORD_CHAR(*p)){
 					word = p;
 					state = STAT_IN_WORD;
 				}
@@ -58,8 +49,7 @@ int word_segmentation(const char* text, OnWordFunc on_word, void* ctx)
 		}
 	}
 
-	if(state == STAT_IN_WORD)
-	{
+	if(state == STAT_IN_WORD){
 		count++;
 		on_word(ctx, word);
 	}

@@ -23,13 +23,10 @@ typedef struct _MaxCtx
 static DListRet max_cb(void* ctx, void* data)
 {
 	MaxCtx* max_ctx = ctx;
-	if(max_ctx->is_first)
-	{
+	if(max_ctx->is_first) {
 		max_ctx->is_first = 0;
 		max_ctx->max = (int)data;
-	}
-	else if(max_ctx->max < (int)data)
-	{
+	}else if(max_ctx->max < (int)data){
 		max_ctx->max = (int)data;
 	}
 
@@ -51,8 +48,7 @@ int main(int argc, char* argv[])
 	MaxCtx max_ctx = {.is_first = 1, 0};
 	DList* dlist = dlist_create();
 
-	for(i = 0; i < n; i++)
-	{
+	for(i = 0; i < n; i++) {
 		assert(dlist_append(dlist, (void*)i) == DLIST_RET_OK);
 	}
 
